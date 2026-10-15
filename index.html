@@ -353,6 +353,8 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
       <p>Open to robotics, automation and systems integration roles in the UAE and abroad. The fastest way to reach me is email or LinkedIn.</p>
       <div>
         <div class="ch"><span>email</span><div class="v" id="email">ibrahim_said_1@icloud.com</div><button type="button" id="copy">copy</button></div>
+        <div class="ch"><span>phone</span><div class="v" id="phone">+971 52 924 3046</div><button type="button" id="copy-phone">copy</button></div>
+        <div class="ch"><span>whatsapp</span><a class="v" href="https://wa.me/971529243046" target="_blank" rel="noopener">wa.me/971529243046</a><span></span></div>
         <div class="ch"><span>linkedin</span><a class="v" href="https://www.linkedin.com/in/ibrahim-said-hussein-elsayed" target="_blank" rel="noopener">/in/ibrahim-said-hussein-elsayed</a><span></span></div>
         <div class="ch"><span>github</span><a class="v" href="https://github.com/ibrahimelsayed804" target="_blank" rel="noopener">github.com/ibrahimelsayed804</a><span></span></div>
       </div>
@@ -369,13 +371,16 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
   function tick(){ try{ ck.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Dubai',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date())+' GST'; }catch(e){} }
   tick(); setInterval(tick,1000);
 
-  // copy email
-  var cb=document.getElementById('copy');
+  // copy buttons
+  function wireCopy(btnId,valId){
+  var cb=document.getElementById(btnId);
   cb.addEventListener('click',function(){
-    var el=document.getElementById('email');
+    var el=document.getElementById(valId);
     function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);cb.textContent='Cmd+C';}
-    try{navigator.clipboard.writeText(el.textContent).then(function(){cb.textContent='copied';setTimeout(function(){cb.textContent='copy';},1500);},sel);}catch(e){sel();}
+    try{navigator.clipboard.writeText(el.textContent.replace(/\s/g,'')).then(function(){cb.textContent='copied';setTimeout(function(){cb.textContent='copy';},1500);},sel);}catch(e){sel();}
   });
+  }
+  wireCopy('copy','email'); wireCopy('copy-phone','phone');
 
   // whoami typing (text is in the HTML already; we replay it)
   var pre=document.getElementById('whoami');
