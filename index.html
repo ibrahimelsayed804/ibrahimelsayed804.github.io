@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ibrahim Elsayed Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ibrahim Said Hussein Elsayed – Robotics & Systems Integration Engineer, Dubai. ROS 2, C++, sensor fusion, IIoT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single scrolling "robot console" – sticky nav, hero readout, then
+   sections headed by the shell command that would print them. Dark oscilloscope
+   panel by default, engineering-drawing paper in light mode. */
+:root{
+  --bg:#f3f4f0; --panel:#ffffff; --ink:#15212b; --muted:#5b6670; --line:#d6dbd6;
+  --accent:#b65a00; --accent-soft:#f6e6d4; --signal:#1f7a5a; --code-bg:#eef1ec;
+  --f-display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --step--1:0.82rem; --step0:1rem; --step1:1.2rem; --step2:1.55rem; --step3:2.3rem; --step4:clamp(2.4rem,7vw,4.2rem);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141b; --panel:#141c25; --ink:#e4e9ee; --muted:#93a0ad; --line:#24303c;
+  --accent:#ffb347; --accent-soft:#3a2a14; --signal:#5fd3a2; --code-bg:#101820; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e141b; --panel:#141c25; --ink:#e4e9ee; --muted:#93a0ad; --line:#24303c;
+  --accent:#ffb347; --accent-soft:#3a2a14; --signal:#5fd3a2; --code-bg:#101820; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--step0);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto}
+.mono{font-family:var(--f-mono)}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));
+  padding:10px max(16px,env(safe-area-inset-left,0px))}
+nav .wrap{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+nav .id{font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted)}
+nav .id b{color:var(--ink);font-weight:500}
+nav ul{display:flex;gap:16px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+nav a{font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--accent)}
+
+/* hero */
+.hero{padding-block:72px 48px;display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:end}
+.status{font-family:var(--f-mono);font-size:var(--step--1);color:var(--signal);display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 0 var(--signal);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--signal) 60%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font-family:var(--f-display);font-size:var(--step4);line-height:1.02;margin:0 0 14px;letter-spacing:-0.01em;text-wrap:balance}
+h1 span{color:var(--accent)}
+.role{font-size:var(--step1);color:var(--muted);margin:0 0 26px;max-width:34ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{font-family:var(--f-mono);font-size:var(--step--1);padding:10px 16px;border-radius:6px;border:1px solid var(--line);
+  color:var(--ink);text-decoration:none;background:var(--panel);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn:hover{border-color:var(--accent)}
+
+/* readout panel */
+.readout{background:var(--panel);border:1px solid var(--line);border-radius:10px;font-family:var(--f-mono);font-size:var(--step--1);overflow:hidden}
+.readout .bar{display:flex;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--line);color:var(--muted)}
+.readout dl{margin:0;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+.readout dt{color:var(--accent)}
+.readout dd{margin:0;min-width:0}
+
+/* sections */
+section{padding-block:44px;border-top:1px solid var(--line)}
+.cmd{font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted);margin:0 0 6px}
+.cmd b{color:var(--signal);font-weight:500}
+h2{font-family:var(--f-display);font-size:var(--step3);margin:0 0 24px;line-height:1.1;text-wrap:balance}
+p.lead{max-width:65ch;color:var(--ink);margin:0}
+
+/* experience log */
+.log{display:grid;gap:22px}
+.entry{display:grid;grid-template-columns:150px 1fr;gap:22px}
+.entry time{font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted);padding-top:4px;font-variant-numeric:tabular-nums}
+.entry h3{font-family:var(--f-display);font-size:var(--step1);margin:0;line-height:1.3}
+.entry .org{color:var(--muted);font-size:var(--step--1);margin:2px 0 8px}
+.entry ul{margin:0;padding-left:18px;max-width:68ch}
+.entry li{margin-bottom:4px}
+.entry > div{min-width:0}
+
+/* projects */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.pkg{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pkg .top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted)}
+.pill{font-family:var(--f-mono);font-size:0.72rem;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.pill.ok{background:color-mix(in srgb,var(--signal) 16%,transparent);color:var(--signal)}
+.pkg h3{font-family:var(--f-display);font-size:var(--step1);margin:0;line-height:1.3}
+.pkg p{margin:0;color:var(--muted);font-size:0.95rem}
+.metric{font-family:var(--f-mono);font-size:var(--step--1);color:var(--ink);background:var(--code-bg);border-radius:6px;padding:8px 10px}
+.metric b{color:var(--accent);font-weight:500}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tags span{font-family:var(--f-mono);font-size:0.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+
+/* stack */
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px 28px}
+.stack h3{font-family:var(--f-mono);font-size:var(--step--1);color:var(--accent);font-weight:500;margin:0 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.stack p{margin:0;font-size:0.95rem}
+
+/* education + certs */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.two > div{min-width:0}
+.edu h3{font-family:var(--f-display);font-size:var(--step1);margin:0 0 4px}
+.badge{display:inline-flex;gap:8px;align-items:center;font-family:var(--f-mono);font-size:var(--step--1);color:var(--signal);margin-top:10px}
+.certs{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.certs li{display:grid;grid-template-columns:1fr auto;gap:12px;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.certs small{font-family:var(--f-mono);color:var(--muted);white-space:nowrap}
+
+/* contact */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.chan{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.chan span{font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted)}
+.chan .val{font-family:var(--f-mono);overflow-wrap:anywhere;user-select:all}
+.chan button{align-self:flex-start}
+footer{padding-block:28px 40px;border-top:1px solid var(--line);font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+
+/* ---------- hacker layer ---------- */
+#boot{position:fixed;inset:0;z-index:50;background:#020604;color:#3dff8a;font-family:var(--f-mono);
+  font-size:clamp(0.78rem,1.6vw,0.95rem);display:flex;flex-direction:column;justify-content:flex-end;
+  padding:24px max(20px,env(safe-area-inset-left,0px)) calc(40px + env(safe-area-inset-bottom,0px));
+  animation:bootAuto .5s ease 6s forwards}
+#boot.done{opacity:0;pointer-events:none;transition:opacity .45s ease}
+@keyframes bootAuto{to{opacity:0;visibility:hidden;pointer-events:none}}
+#boot .ln{white-space:pre-wrap;overflow-wrap:anywhere;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+#boot .ln.on{opacity:1;transform:none}
+#boot .ok{color:#d9ffe8}
+#boot .warn{color:#ffb347}
+#boot .skip{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));
+  background:transparent;color:#3dff8a;border:1px solid #1d5c38;border-radius:4px;padding:6px 10px;font:inherit;cursor:pointer}
+#boot .bar{height:2px;background:#0d2a1a;margin-top:14px;max-width:420px}
+#boot .bar i{display:block;height:100%;width:0;background:#3dff8a;transition:width .2s linear}
+#boot::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 1px,transparent 1px 3px)}
+.cursor{display:inline-block;width:.6em;height:1.05em;background:var(--accent);vertical-align:-0.15em;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.typed{min-height:1.6em}
+h1.glitch{position:relative}
+h1.glitch:hover span{animation:glitch .35s steps(2) 2}
+@keyframes glitch{0%{text-shadow:2px 0 var(--signal),-2px 0 var(--accent);transform:translateX(1px)}
+  50%{text-shadow:-2px 0 var(--signal),2px 0 var(--accent);transform:translateX(-1px)}100%{text-shadow:none;transform:none}}
+.scan{position:fixed;inset:0;pointer-events:none;z-index:4;opacity:.05;
+  background:repeating-linear-gradient(0deg,var(--ink) 0 1px,transparent 1px 4px)}
+.cmd.typing b::after{content:"";}
+.pkg{transition:border-color .2s,transform .2s}
+.pkg:hover{border-color:var(--accent);transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){#boot{display:none}.cursor{animation:none}}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding-block:44px 32px}
+  .grid,.two{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:4px}
+  nav ul{gap:12px}
+}
+</style>
+</head>
+<body>
+<div id="boot" role="status" aria-label="Loading portfolio">
+  <button class="skip" type="button" id="boot-skip">skip ›</button>
+  <div id="boot-lines"></div>
+  <div class="bar"><i id="boot-bar"></i></div>
+</div>
+<div class="scan" aria-hidden="true"></div>
+
+<nav aria-label="Sections">
+  <div class="wrap">
+    <div class="id"><b>ibrahim@dubai</b>:~$<span class="cursor" aria-hidden="true"></span></div>
+    <ul>
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#education">education</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero" id="top">
+    <div>
+      <div class="status"><i aria-hidden="true"></i>/status: open to robotics &amp; automation roles</div>
+      <h1 class="glitch">Ibrahim<br><span>Elsayed</span></h1>
+      <p class="role typed" id="role">Robotics &amp; systems integration engineer. I build the software that makes robots work outside the lab.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">./view_projects</a>
+        <a class="btn" href="#contact">./contact</a>
+        <a class="btn" href="https://github.com/ibrahimelsayed804" target="_blank" rel="noopener">github</a>
+      </div>
+    </div>
+    <aside class="readout" aria-label="Quick facts">
+      <div class="bar"><span>$ ros2 node info /ibrahim</span><span>v1</span></div>
+      <dl>
+        <dt>location</dt><dd>Dubai, UAE · open to relocate</dd>
+        <dt>role</dt><dd>Software Engineer, Systems Integration</dd>
+        <dt>degree</dt><dd>B.Eng Mechatronics (Hons), UOW Malaysia</dd>
+        <dt>accredited</dt><dd>Washington Accord</dd>
+        <dt>stack</dt><dd>ROS 2 · C++ · Python · Docker</dd>
+        <dt>languages</dt><dd>Arabic · English (C1) · Malay</dd>
+      </dl>
+    </aside>
+  </header>
+
+  <section id="about">
+    <p class="cmd"><b>$</b> cat about.md</p>
+    <h2>About</h2>
+    <p class="lead">I'm a mechatronics engineer working where mechanics, electronics and code meet. In Dubai I build hardware-software integration layers and real-time telemetry for autonomous platforms. Before that I validated service robots in live customer deployments and secured an industrial smart-factory network. I care most about systems that keep working once they leave the lab: measured, monitored and documented.</p>
+  </section>
+
+  <section id="experience">
+    <p class="cmd"><b>$</b> tail -n 3 work.log</p>
+    <h2>Experience</h2>
+    <div class="log">
+      <article class="entry">
+        <time>Nov 2025 – Present</time>
+        <div>
+          <h3>Software Engineer, Systems Integration</h3>
+          <p class="org">Heralds Investments FZE LLC · Dubai, UAE</p>
+          <ul>
+            <li>Designed modular hardware-software integration layers for autonomous platforms in C++ and Python, standardising interface contracts across teams.</li>
+            <li>Built real-time telemetry pipelines on DDS and MQTT with sub-100 ms system-health latency across distributed nodes.</li>
+            <li>Containerised the autonomy stack with Docker for consistent deployment across 3+ edge server environments.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="entry">
+        <time>Jul – Sep 2025</time>
+        <div>
+          <h3>Robotics Engineer Intern, Field Operations</h3>
+          <p class="org">Robopreneur Sdn Bhd · Selangor, Malaysia</p>
+          <ul>
+            <li>Led on-site validation of service robots in live customer deployments.</li>
+            <li>Resolved ROS communication bottlenecks that caused 30%+ data lag between sensors and actuators.</li>
+            <li>Patched C++ navigation-stack bugs from field data and documented the system architecture for new engineers.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="entry">
+        <time>Jun – Aug 2024</time>
+        <div>
+          <h3>Cybersecurity Intern, Network &amp; Systems Security</h3>
+          <p class="org">SHRDC, Smart Factory Division · Selangor, Malaysia</p>
+          <ul>
+            <li>Installed Linux on the factory's Raspberry Pi devices and configured a firewall on each one.</li>
+            <li>Set up remote access so the team could monitor and control every device off-site.</li>
+            <li>Segmented the network with subnetting and deployed Wazuh (SIEM) and Checkmk for security and health monitoring.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="cmd"><b>$</b> ls ./projects</p>
+    <h2>Projects</h2>
+    <div class="grid">
+      <article class="pkg">
+        <div class="top"><span>nav_stack/</span><span class="pill">Project</span></div>
+        <h3>Autonomous Navigation Stack (ROS 2)</h3>
+        <p>Modular C++ navigation libraries with Extended Kalman Filter fusion of IMU and LiDAR, plus custom ROS 2 nodes for deterministic message delivery.</p>
+        <div class="metric">result: <b>stable localisation without GPS</b></div>
+        <div class="tags"><span>ROS 2</span><span>C++</span><span>EKF</span><span>LiDAR</span><span>IMU</span></div>
+      </article>
+      <article class="pkg">
+        <div class="top"><span>iiot_gateway/</span><span class="pill">Project</span></div>
+        <h3>IIoT Telemetry Gateway</h3>
+        <p>A real-time bridge that streams live industrial sensor data from a Raspberry Pi 5 to edge servers over MQTT, with SQL storage.</p>
+        <div class="metric">latency: <b>&lt; 50 ms end-to-end</b></div>
+        <div class="tags"><span>MQTT</span><span>SQL</span><span>Raspberry Pi 5</span><span>Python</span></div>
+      </article>
+      <article class="pkg">
+        <div class="top"><span>autonomy_deploy/</span><span class="pill ok">Deployed</span></div>
+        <h3>Containerised Autonomy Stack</h3>
+        <p>Docker packaging of the autonomy stack plus DDS/MQTT health telemetry, so the same build runs on every edge server.</p>
+        <div class="metric">targets: <b>3+ edge environments</b> · telemetry <b>&lt; 100 ms</b></div>
+        <div class="tags"><span>Docker</span><span>DDS</span><span>MQTT</span><span>C++</span><span>Python</span></div>
+      </article>
+      <article class="pkg">
+        <div class="top"><span>factory_secure/</span><span class="pill ok">Deployed</span></div>
+        <h3>Smart Factory Network Security</h3>
+        <p>Hardened Raspberry Pi devices on an industrial network: Linux setup, a firewall per device, subnetting and remote monitoring and control.</p>
+        <div class="metric">monitoring: <b>Wazuh SIEM + Checkmk</b></div>
+        <div class="tags"><span>Linux</span><span>Firewall</span><span>Subnetting</span><span>Wazuh</span><span>Checkmk</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="stack">
+    <p class="cmd"><b>$</b> cat stack.yaml</p>
+    <h2>Tech stack</h2>
+    <div class="stack">
+      <div><h3>Robotics &amp; autonomy</h3><p>ROS 2, ROS 1, SLAM, localisation, autonomous navigation, EKF sensor fusion, MoveIt, OMPL</p></div>
+      <div><h3>Programming</h3><p>C++ (OOP), Python, CMake, Bash</p></div>
+      <div><h3>Middleware &amp; protocols</h3><p>DDS, MQTT, MAVLink, Protobuf, JSON, REST APIs</p></div>
+      <div><h3>Tools</h3><p>Linux (Ubuntu), Git, Docker, CI/CD, Gazebo, RViz</p></div>
+      <div><h3>Hardware</h3><p>NVIDIA Jetson Nano, Pixhawk (PX4), Raspberry Pi, IMU, LiDAR</p></div>
+      <div><h3>Design &amp; security</h3><p>SolidWorks, MATLAB, subnetting, firewalls, Wazuh, Checkmk</p></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <p class="cmd"><b>$</b> cat education.txt certs.txt</p>
+    <h2>Education &amp; certificates</h2>
+    <div class="two">
+      <div class="edu">
+        <h3>Bachelor of Mechatronics Engineering with Honours</h3>
+        <p class="org" style="color:var(--muted);margin:0">University of Wollongong Malaysia · 2019 – 2025</p>
+        <div class="badge">✓ EAC accredited · Washington Accord</div>
+      </div>
+      <ul class="certs">
+        <li><span>IELTS Academic, overall 7.5 (C1)</span><small>English</small></li>
+        <li><span>Prompt Design in Vertex AI (Skill Badge)</span><small>Google Cloud · 2026</small></li>
+        <li><span>Generative AI · LLMs · Responsible AI</span><small>Google Cloud · 2026</small></li>
+        <li><span>Scientific Computing with Python</span><small>freeCodeCamp</small></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="cmd"><b>$</b> ./contact --open</p>
+    <h2>Contact</h2>
+    <div class="contact">
+      <div class="chan"><span>email</span><div class="val" id="email">ibrahim_said_1@icloud.com</div><button class="btn" type="button" id="copy-email">Copy email</button></div>
+      <div class="chan"><span>linkedin</span><a class="val" href="https://www.linkedin.com/in/ibrahim-said-hussein-elsayed" target="_blank" rel="noopener">linkedin.com/in/ibrahim-said-hussein-elsayed</a></div>
+      <div class="chan"><span>github</span><a class="val" href="https://github.com/ibrahimelsayed804" target="_blank" rel="noopener">github.com/ibrahimelsayed804</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Ibrahim Said Hussein Elsayed</span>
+    <span>Dubai, UAE · built with plain HTML &amp; CSS</span>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var boot=document.getElementById('boot');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen=false; try{seen=sessionStorage.getItem('booted')==='1';}catch(e){}
+  function finish(){ if(!boot.classList.contains('done')){boot.classList.add('done'); setTimeout(function(){boot.hidden=true;},500); try{sessionStorage.setItem('booted','1');}catch(e){} typeRole(); } }
+  var lines=[
+    ['ok','[ OK ] Initializing kernel :: mechatronics-os'],
+    ['ok','[ OK ] Mounting /dev/lidar0 /dev/imu0'],
+    ['ok','[ OK ] Starting ros2 daemon :: nav_stack'],
+    ['ok','[ OK ] Calibrating EKF sensor fusion :: imu + lidar'],
+    ['ok','[ OK ] Bringing up DDS middleware :: telemetry < 100 ms'],
+    ['ok','[ OK ] Connecting MQTT broker :: iiot_gateway < 50 ms'],
+    ['ok','[ OK ] Loading containers :: docker x3 edge nodes'],
+    ['ok','[ OK ] Firewall :: default-deny | wazuh agent active'],
+    ['warn','[ >> ] Launching /ibrahim_elsayed ...'],
+    ['ok','[ OK ] System online. Welcome.']
+  ];
+  if(reduce||seen){ boot.hidden=true; return; }
+  var box=document.getElementById('boot-lines'), bar=document.getElementById('boot-bar'), i=0;
+  document.getElementById('boot-skip').addEventListener('click',finish);
+  document.addEventListener('keydown',function k(){finish();document.removeEventListener('keydown',k);});
+  (function next(){
+    if(boot.classList.contains('done')) return;
+    if(i>=lines.length){ setTimeout(finish,450); return; }
+    var d=document.createElement('div'); d.className='ln '+lines[i][0]; d.textContent=lines[i][1];
+    box.appendChild(d); requestAnimationFrame(function(){d.classList.add('on');});
+    i++; bar.style.width=(i/lines.length*100)+'%';
+    setTimeout(next, 220+Math.random()*180);
+  })();
+})();
+var typedOnce=false;
+function typeRole(){
+  if(typedOnce) return; typedOnce=true;
+  var el=document.getElementById('role'); if(!el) return;
+  var full=el.textContent; el.setAttribute('aria-label',full); el.textContent='';
+  var c=document.createElement('span'); c.className='cursor'; c.setAttribute('aria-hidden','true');
+  var t=document.createTextNode(''); el.appendChild(t); el.appendChild(c); var n=0;
+  (function step(){ n+=2; t.nodeValue=full.slice(0,n); if(n<full.length) setTimeout(step,18); })();
+}
+(function(){ var b=document.getElementById('boot'); if(b.hidden) typeRole(); })();
+
+(function(){
+  var b=document.getElementById('copy-email');
+  b.addEventListener('click',function(){
+    var t=document.getElementById('email').textContent;
+    function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy email';},1600);}
+    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=window.getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected – press Cmd/Ctrl+C';}
+    try{navigator.clipboard.writeText(t).then(done,fallback);}catch(e){fallback();}
+  });
+})();
+</script>
+</body>
+</html>
