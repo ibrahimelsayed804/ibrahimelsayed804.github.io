@@ -159,6 +159,20 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
 #boot::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 1px,transparent 1px 3px)}
 .scan{position:fixed;inset:0;pointer-events:none;z-index:20;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
 
+
+.connect{border:1px solid var(--line);background:rgba(11,17,15,.85);padding:clamp(40px,7vw,80px) clamp(18px,5vw,60px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:26px}
+.ceyebrow{font-family:var(--f-head);font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);font-size:16px}
+.ceyebrow span{color:var(--amber);letter-spacing:.2em}
+.chead{font-family:var(--f-display);font-weight:800;text-transform:uppercase;color:var(--mint);margin:0;line-height:1.15;
+  font-size:clamp(2.6rem,8vw,5.6rem);text-wrap:balance;text-shadow:0 0 26px rgba(57,255,136,.15)}
+.cpara{max-width:60ch;color:#b9d2c6;margin:0;font-size:16px;line-height:1.8}
+.cbtns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px;max-width:100%}
+.cbtn{font-family:var(--f-head);font-weight:700;font-size:17px;padding:16px 30px;border:1px solid #1f4a55;color:var(--cyan);text-decoration:none;
+  overflow-wrap:anywhere;max-width:100%;transition:all .2s}
+.cbtn:hover{border-color:var(--cyan);box-shadow:0 0 18px rgba(63,224,255,.25)}
+.cbtn.go{background:#7dff9a;border-color:#7dff9a;color:#03140b}
+.cbtn.go:hover{box-shadow:0 0 22px rgba(125,255,154,.5)}
+
 @media (max-width:820px){
   .about,.contact,.cases{grid-template-columns:1fr}
   .job{grid-template-columns:1fr;gap:6px}
@@ -349,15 +363,16 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
   </section>
 
   <section id="contact">
-    <div class="sh"><span class="n">08.</span><h2>Contact</h2><div class="cmd"><b>$</b> ./send_message.sh</div></div>
-    <div class="contact">
-      <p>Open to robotics, automation and systems integration roles in the UAE and abroad. The fastest way to reach me is email or LinkedIn.</p>
-      <div>
-        <div class="ch"><span>email</span><div class="v" id="email">ibrahim_said_1@icloud.com</div><button type="button" id="copy">copy</button></div>
-        <div class="ch"><span>phone</span><div class="v" id="phone">+971 52 924 3046</div><button type="button" id="copy-phone">copy</button></div>
-        <div class="ch"><span>whatsapp</span><a class="v" href="https://wa.me/971529243046" target="_blank" rel="noopener">wa.me/971529243046</a><span></span></div>
-        <div class="ch"><span>linkedin</span><a class="v" href="https://www.linkedin.com/in/ibrahim-said-hussein-elsayed" target="_blank" rel="noopener">/in/ibrahim-said-hussein-elsayed</a><span></span></div>
-        <div class="ch"><span>github</span><a class="v" href="https://github.com/ibrahimelsayed804" target="_blank" rel="noopener">github.com/ibrahimelsayed804</a><span></span></div>
+    <div class="connect">
+      <div class="ceyebrow"><span>08</span>/ establish connection</div>
+      <h2 class="chead">Let's build robots<br>that leave the lab.</h2>
+      <p class="cpara">I build robotic systems that join hardware, sensors and software, and I make sure they keep working on site. Open to robotics, automation and systems integration roles in the UAE and abroad.</p>
+      <div class="cbtns">
+        <a class="cbtn go" href="mailto:ibrahim_said_1@icloud.com">ibrahim_said_1@icloud.com</a>
+        <a class="cbtn" href="tel:+971529243046">+971 52 924 3046</a>
+        <a class="cbtn" href="https://wa.me/971529243046" target="_blank" rel="noopener">whatsapp</a>
+        <a class="cbtn" href="https://github.com/ibrahimelsayed804" target="_blank" rel="noopener">github.com/ibrahimelsayed804</a>
+        <a class="cbtn" href="https://www.linkedin.com/in/ibrahim-said-hussein-elsayed" target="_blank" rel="noopener">linkedin.com/in/ibrahim-said-hussein-elsayed</a>
       </div>
     </div>
   </section>
@@ -381,7 +396,6 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
     try{navigator.clipboard.writeText(el.textContent.replace(/\s/g,'')).then(function(){cb.textContent='copied';setTimeout(function(){cb.textContent='copy';},1500);},sel);}catch(e){sel();}
   });
   }
-  wireCopy('copy','email'); wireCopy('copy-phone','phone');
 
   // whoami typing (text is in the HTML already; we replay it)
   var pre=document.getElementById('whoami');
