@@ -415,11 +415,9 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
 
   // boot sequence
   var boot=document.getElementById('boot');
-  var seen=false; try{seen=sessionStorage.getItem('ie_boot')==='1';}catch(e){}
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function done(){ if(boot.classList.contains('done')) return; boot.classList.add('done'); setTimeout(function(){boot.hidden=true;},550);
-    try{sessionStorage.setItem('ie_boot','1');}catch(e){} typeWho(); }
-  if(seen||reduce){ boot.hidden=true; typeWho(); return; }
+  function done(){ if(boot.classList.contains('done')) return; boot.classList.add('done'); setTimeout(function(){boot.hidden=true;},550); typeWho(); }
+  if(reduce){ boot.hidden=true; typeWho(); return; }
   var L=[
     'Initializing kernel :: mechatronics-os',
     'Mounting /dev/lidar0 /dev/imu0',
