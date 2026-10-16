@@ -350,7 +350,31 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
         <div class="chips"><span>ROS 2</span><span>C++</span><span>EKF</span><span>LiDAR</span></div>
       </article>
       <article class="case">
-        <div class="top"><span>case_002 / bioloid_humanoid</span><span class="tag pro">Prototype</span></div>
+        <div class="top"><span>case_002 / iiot_gateway</span><span class="tag pro">Prototype</span></div>
+        <h3>IIoT Telemetry Gateway</h3>
+        <ul><li>Real-time bridge streaming industrial sensor data to edge servers.</li>
+        <li>Under 50 ms end-to-end latency over MQTT.</li>
+        <li>Runs on a Raspberry Pi 5 with SQL storage.</li></ul>
+        <div class="chips"><span>MQTT</span><span>SQL</span><span>Raspberry Pi 5</span><span>Python</span></div>
+      </article>
+      <article class="case">
+        <div class="top"><span>case_003 / autonomy_deploy</span><span class="tag dep">Deployed</span></div>
+        <h3>Containerised Autonomy Stack</h3>
+        <ul><li>Docker packaging so one build runs on 3+ edge server environments.</li>
+        <li>DDS/MQTT health telemetry under 100 ms across nodes.</li>
+        <li>Removed environment-specific deployment failures.</li></ul>
+        <div class="chips"><span>Docker</span><span>DDS</span><span>MQTT</span><span>C++</span></div>
+      </article>
+      <article class="case">
+        <div class="top"><span>case_004 / factory_secure</span><span class="tag dep">Deployed</span></div>
+        <h3>Smart Factory Network Security</h3>
+        <ul><li>Hardened Raspberry Pi devices: Linux setup and a firewall per device.</li>
+        <li>Subnetting to separate device segments on the factory network.</li>
+        <li>Wazuh SIEM and Checkmk for security and health monitoring.</li></ul>
+        <div class="chips"><span>Linux</span><span>Firewall</span><span>Wazuh</span><span>Checkmk</span></div>
+      </article>
+      <article class="case">
+        <div class="top"><span>case_005 / bioloid_humanoid</span><span class="tag pro">Prototype</span></div>
         <h3>Humanoid Robot: ROBOTIS Bioloid (CM-530)</h3>
         <ul><li>Assembled and wired a ROBOTIS Bioloid humanoid robot.</li>
         <li>Programmed it on the CM-530 controller (ARM Cortex-M3).</li>
@@ -361,7 +385,7 @@ footer{margin-top:60px;padding-block:24px 40px;border-top:1px solid var(--line);
         <div><video src="sorter-demo.mp4" poster="sorter-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Rotating multi-tier waste sorter running"></video>
         <div class="cap">&gt; demo.mp4 · university build, 2023</div></div>
         <div class="txt">
-          <div class="top"><span>case_003 / waste_sorter</span><span class="tag pro">Prototype</span></div>
+          <div class="top"><span>case_006 / waste_sorter</span><span class="tag pro">Prototype</span></div>
           <h3>Trash Collection &amp; Classification Machine</h3>
           <ul><li>Motor-driven, multi-tier rotating sieve that separates mixed waste by size.</li>
           <li>Each tier has a different hole size, so smaller items drop through and larger ones stay on top.</li>
